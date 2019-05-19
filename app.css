@@ -1,0 +1,87 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+ul.chars {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+div.actions {
+  background-color: #ccc;
+  padding: 12px;
+}
+
+/* char-editor */
+#char-editor {
+  display: flex;
+  padding: 24px 12px;
+}
+
+#char-editor .editor-actions {
+  display: flex;
+  flex-direction: column;
+  margin: 0 24px;
+}
+
+#char-editor .editor-actions button {
+  margin-bottom: 12px;
+}
+
+#char-editor .source-code {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  flex: 1;
+  margin: 0 0 0 12px;
+  padding: 12px;
+  font-family: monospace;
+  background-color: #eee;
+  border: none;
+}
+
+/* char-details */
+.char-details {
+  display: flex;
+  border: 2px solid #ccc;
+  margin: 12px;
+  padding: 12px;
+}
+
+.char-details.active {
+  border-color: red;
+}
+
+/* lcd-grid */
+.lcd-grid {
+  display: inline-grid;
+  grid-column-gap: 4px;
+  grid-row-gap: 4px;
+}
+
+.lcd-grid .pixel {
+  width: 24px;
+  height: 24px;
+  background-color: rgba(0, 0, 0, 0.15);
+}
+
+.lcd-grid .pixel.active {
+  background-color: green;
+}
+
+.lcd-grid.small {
+  grid-column-gap: 1px;
+  grid-row-gap: 1px;
+}
+
+.lcd-grid.small .pixel {
+  width: 8px;
+  height: 8px;
+}
+
+.lcd-grid.editable .pixel {
+  cursor: pointer;
+}
