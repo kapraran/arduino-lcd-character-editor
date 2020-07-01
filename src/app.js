@@ -1,14 +1,11 @@
 function makeEmptyChar(rows, cols) {
-  return new Array(rows)
-    .fill(null)
-    .map(() => new Array(cols).fill(0))
+  return new Array(rows).fill(null).map(() => new Array(cols).fill(0))
 }
 
 function copyChar(charArray) {
   const newChar = []
 
-  for (let r=0; r<charArray.length; r++)
-    newChar.push(charArray[r].slice(0))
+  for (let r = 0; r < charArray.length; r++) newChar.push(charArray[r].slice(0))
 
   return newChar
 }
@@ -16,7 +13,7 @@ function copyChar(charArray) {
 function row2num(row) {
   let n = 0
 
-  for (let c=0; c<row.length; c++)
+  for (let c = 0; c < row.length; c++)
     n += row[row.length - c - 1] * Math.pow(2, c)
 
   return n
@@ -27,7 +24,7 @@ const COLS = 5
 
 const sharedData = {
   characters: [makeEmptyChar(ROWS, COLS)],
-  charIndex: 0
+  charIndex: 0,
 }
 
 Vue.component('char-editor', {
@@ -39,33 +36,41 @@ Vue.component('char-editor', {
   },
   methods: {
     clear() {
-      for (let r=0; r<ROWS; r++)
-        this.$set(this.shared.characters[this.shared.charIndex], r, new Array(COLS).fill(0))
+      for (let r = 0; r < ROWS; r++)
+        this.$set(
+          this.shared.characters[this.shared.charIndex],
+          r,
+          new Array(COLS).fill(0)
+        )
     },
 
     fill() {
-      for (let r=0; r<ROWS; r++)
-        this.$set(this.shared.characters[this.shared.charIndex], r, new Array(COLS).fill(1))
-    }
+      for (let r = 0; r < ROWS; r++)
+        this.$set(
+          this.shared.characters[this.shared.charIndex],
+          r,
+          new Array(COLS).fill(1)
+        )
+    },
   },
 
   computed: {
     sourceCode() {
       const numArray = new Array(ROWS).fill(0)
-      for (let r=0; r<ROWS; r++)
+      for (let r = 0; r < ROWS; r++)
         numArray[r] = row2num(this.shared.characters[this.shared.charIndex][r])
 
-      const hexArray = numArray.map(n => `0x${n.toString(16)}`)
+      const hexArray = numArray.map((n) => `0x${n.toString(16)}`)
       return `const uint8_t charBitmap[] = { ${hexArray.join(', ')} };`
-    }
-  }
+    },
+  },
 })
 
 Vue.component('char-details', {
   template: '#char-details-tpl',
   props: {
     active: Boolean,
-    charIndex: Number
+    charIndex: Number,
   },
   data() {
     return {
@@ -75,8 +80,8 @@ Vue.component('char-details', {
   methods: {
     activate() {
       this.$emit('activate')
-    }
-  }
+    },
+  },
 })
 
 Vue.component('lcd-grid', {
@@ -84,20 +89,20 @@ Vue.component('lcd-grid', {
   props: {
     small: Boolean,
     editable: Boolean,
-    charIndex: Number
+    charIndex: Number,
   },
   data() {
     return {
       shared: sharedData,
       rows: ROWS,
-      cols: COLS
+      cols: COLS,
     }
   },
   methods: {
     pixelStyles(i) {
       const rc = this.i2rc(i)
 
-      return {'grid-row': rc.r + 1, 'grid-column': rc.c + 1}
+      return { 'grid-row': rc.r + 1, 'grid-column': rc.c + 1 }
     },
 
     clicked(i) {
@@ -117,17 +122,17 @@ Vue.component('lcd-grid', {
 
     i2rc(i) {
       const r = parseInt(i / this.cols)
-      const c = i - r*this.cols
+      const c = i - r * this.cols
 
-      return {r, c}
-    }
-  }
+      return { r, c }
+    },
+  },
 })
 
 var app = new Vue({
   el: '#app',
   data: {
-    shared: sharedData
+    shared: sharedData,
   },
 
   methods: {
@@ -136,8 +141,7 @@ var app = new Vue({
     },
 
     delChar() {
-      if (this.shared.characters.length === 1)
-        this.newChar()
+      if (this.shared.characters.length === 1) this.newChar()
 
       const oldIndex = this.shared.charIndex
 
@@ -154,7 +158,7 @@ var app = new Vue({
     },
 
     setCharIndex(i) {
-      this.shared.charIndex = i;
-    }
-  }
+      this.shared.charIndex = i
+    },
+  },
 })
