@@ -2,65 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LED editor</title>
-  <link rel="stylesheet" href="app.css">
 </head>
 <body>
-  <div id="app">
-    <char-editor></char-editor>
-
-    <div class="actions">
-      <button class="new" @click="newChar">New character</button>
-      <button class="delete" @click="delChar">Delete character</button>
-      <button class="duplicate" @click="duplChar">Duplicate character</button>
-    </div>
-
-    <ul class="chars">
-      <char-details
-        v-for="(c, i) in shared.characters"
-        :key="i"
-        :char-index="i"
-        :active="shared.charIndex === i"
-        @activate="setCharIndex(i)"
-      ></char-details>
-    </ul>
-  </div>
-
-  <!-- char-editor -->
-  <template id="char-editor-tpl">
-    <div id="char-editor">
-      <lcd-grid editable :char-index="shared.charIndex"></lcd-grid>
-
-      <div class="editor-actions">
-        <button @click="clear">Clear</button>
-        <button @click="fill">Fill</button>
-      </div>
-
-      <textarea class="source-code" readonly>{{ sourceCode }}</textarea>
-    </div>
-  </template>
-
-  <!-- char-details -->
-  <template id="char-details-tpl">
-    <li :class="{'char-details': true, active}" @click="activate">
-      <lcd-grid small :char-index="charIndex"></lcd-grid>
-    </li>
-  </template>
-
-  <!-- lcd-grid -->
-  <template id="lcd-grid-tpl">
-    <div :class="{'lcd-grid': true, small, editable}">
-      <div
-        v-for="(v, i) in rows*cols"
-        :key="i"
-        :class="{pixel: true, active: status(i)}"
-        :style="pixelStyles(i)"
-        @click="clicked(i)"
-      ></div>
-    </div>
-  </template>
-
-  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-  <script src="app.js"></script>
+  <script src="index.js"></script>
 </body>
 </html>
